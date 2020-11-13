@@ -3,8 +3,10 @@ package network
 import (
 	"fmt"
 	"io"
+	"mime"
 	"net/http"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/dustin/go-humanize"
@@ -24,19 +26,24 @@ func NewFile(url string) FileDownloader {
 
 // loading the entire file into memory.
 func (file FileDownloader) Download() error {
-	// Create the file
-	out, err := os.Create("a.txt")
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-
 	// Get the data
 	resp, err := http.Get(file.url)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
+	filename := path.Base(resp.Request.URL.Path)
+
+	_, params, err := mime.ParseMediaType(resp.Header.Get("Content-Disposition"))
+	if params["filename"] != "" {
+		filename = params["filename"]
+	}
+	// Create the file
+	out, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
 
 	// Write the body to file
 	_, err = io.Copy(out, resp.Body)
