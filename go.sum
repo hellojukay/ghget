@@ -1,2 +1,4 @@
+github.com/dariubs/percent v0.0.0-20200128140941-b7801cf1c7e2 h1:5EPE4Uk7ucthLTJAZqZxu6LZluox5/AqXUxJDpzgJjg=
+github.com/dariubs/percent v0.0.0-20200128140941-b7801cf1c7e2/go.mod h1:NDZpkezJ8QqyIW/510MywB5T2KdC8v/0oTlEoPcMsRM=
 github.com/dustin/go-humanize v1.0.0 h1:VSnTsYCnlFHaM2/igO1h6X3HA71jcobQuxemgkq4zYo=
 github.com/dustin/go-humanize v1.0.0/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=
