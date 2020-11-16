@@ -5,3 +5,5 @@ wget implement by golang
 ```bash
 go get -u github.com/hellojukay/ghget
 ```
+
+![demo](demo.gif)
