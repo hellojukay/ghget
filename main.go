@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"github.com/hellojukay/ghget/network"
 )
 
@@ -17,6 +19,10 @@ func init() {
 	flag.BoolVar(&proxy, "proxy", false, "github proxy default: https://g.ioiox.com/ ")
 	flag.StringVar(&github_proxy, "github-proxy", "https://g.ioiox.com/", "github proxy server")
 	flag.Parse()
+	if url == "" {
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
 	if proxy {
 		fmt.Println("donwloading by github proxy: https://g.ioiox.com/ ")
 		url = github_proxy + url
