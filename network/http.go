@@ -26,14 +26,16 @@ func NewFile(url string) *FileDownloader {
 }
 
 // loading the entire file into memory.
-func (file *FileDownloader) Download() error {
+func (file *FileDownloader) Download(filename string) error {
 	// Get the data
 	resp, err := http.Get(file.url)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
-	filename := path.Base(resp.Request.URL.Path)
+	if filename == "" {
+		filename = path.Base(resp.Request.URL.Path)
+	}
 	size := resp.Header.Get("Content-Length")
 	filesize, _ := strconv.Atoi(size)
 	file.Total = uint64(filesize)
@@ -55,7 +57,7 @@ func (file *FileDownloader) Download() error {
 		n, err := resp.Body.Read(buffer)
 		out.Write(buffer[:n])
 		sum = sum + uint64(n)
-		render(sum, uint64(filesize))
+		render(filename, sum, uint64(filesize))
 		if err == io.EOF {
 			break
 		}
@@ -67,6 +69,6 @@ func (file *FileDownloader) Download() error {
 
 	return nil
 }
-func render(current uint64, total uint64) {
-	fmt.Printf("\r Downloaded %s Total %s : %.2f%%", humanize.Bytes(current), humanize.Bytes(total), percent.PercentOf(int(current), int(total)))
+func render(filename string, current uint64, total uint64) {
+	fmt.Printf("\rDownloading %s  %s Total %s : %.2f%%", filename, humanize.Bytes(current), humanize.Bytes(total), percent.PercentOf(int(current), int(total)))
 }

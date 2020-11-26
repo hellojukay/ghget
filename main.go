@@ -30,6 +30,6 @@ func init() {
 }
 func main() {
 	client := network.NewFile(url)
-	client.Download()
-	fmt.Printf("%s\n", output)
+	client.Download(output)
+	fmt.Print("\ndone\n")
 }
