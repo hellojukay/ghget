@@ -35,14 +35,16 @@ func (file *FileDownloader) Download(filename string) error {
 	defer resp.Body.Close()
 	if filename == "" {
 		filename = path.Base(resp.Request.URL.Path)
+		_, params, err := mime.ParseMediaType(resp.Header.Get("Content-Disposition"))
+		if err == nil {
+			if params["filename"] != "" {
+				filename = params["filename"]
+			}
+		}
 	}
 	size := resp.Header.Get("Content-Length")
 	filesize, _ := strconv.Atoi(size)
 	file.Total = uint64(filesize)
-	_, params, err := mime.ParseMediaType(resp.Header.Get("Content-Disposition"))
-	if params["filename"] != "" {
-		filename = params["filename"]
-	}
 	// Create the file
 	out, err := os.Create(filename)
 	if err != nil {
