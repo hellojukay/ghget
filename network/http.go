@@ -72,5 +72,5 @@ func (file *FileDownloader) Download(filename string) error {
 	return nil
 }
 func render(filename string, current uint64, total uint64) {
-	fmt.Printf("\rDownloading %s  %s Total %s : %.2f%%", filename, humanize.Bytes(current), humanize.Bytes(total), percent.PercentOf(int(current), int(total)))
+	fmt.Printf("\rDownloading %s  %s Total %s : %.2f%s", filename, humanize.Bytes(current), humanize.Bytes(total), percent.PercentOf(int(current), int(total)), "%")
 }
