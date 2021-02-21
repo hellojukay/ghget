@@ -10,6 +10,6 @@ go get -u github.com/hellojukay/ghget
 
 # speed up for github
 ```bash
-# use proxy service  https://g.ioiox.com/
+# use proxy service  https://ghproxy.com/
 ghget -url <url> --proxy
 ```
